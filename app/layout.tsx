@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Nunito } from "next/font/google";
 import "./globals.css";
 import Navbar from "./components/navbar/Navbar";
+import ClientOnly from "./components/ClientOnly";
+import Modal from "./components/modals/Moda";
 
 
 
@@ -22,7 +24,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={font.className}>
+        <ClientOnly>
         <Navbar/>
+        <Modal isOpen/>
+        </ClientOnly>
+       
         {children}
         </body>
     </html>
