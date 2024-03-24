@@ -5,6 +5,8 @@ import Navbar from "./components/navbar/Navbar";
 import ClientOnly from "./components/ClientOnly";
 import RegisterModal from "./components/modals/RegisterModal";
 import ToasterProvider from "./providers/ToasterProvider";
+import LoginModal from "./components/modals/LoginModal";
+import getCurrentUser from "./actions/getCurrentUser";
 
 
 
@@ -18,18 +20,21 @@ export const metadata: Metadata = {
   description: "Airbnb clone app",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // could had written the session here, but for cleaner structure wrote it seperately.
+  const currentUser = await getCurrentUser();
   return (
     <html lang="en">
       <body className={font.className}>
         <ClientOnly>
         <ToasterProvider/>
-        <Navbar/>
+        <Navbar currentUser = {currentUser}/>
         <RegisterModal/>
+        <LoginModal/>
         </ClientOnly>
        
         {children}
