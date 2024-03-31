@@ -10,7 +10,7 @@ import {FieldValues,SubmitHandler,useForm} from 'react-hook-form'
 import useRegisterModal from '@/app/hooks/useRegisterModal';
 import useLoginModal from '@/app/hooks/useLoginModal';
 
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Modal from './Moda';
 import Heading from '../Heading';
 import Input from '../inputs/Input';
@@ -23,10 +23,15 @@ import { useRouter } from 'next/navigation';
 const LoginModal = ()=>{
 
     const router = useRouter()
+
     const registerModal = useRegisterModal();
     const loginModal = useLoginModal();
     const [isLoading,setIsLoading] = useState(false);
 
+    const toogle = useCallback(()=>{
+      loginModal.onClose();
+      registerModal.onOpen();
+    },[registerModal,loginModal])
 
   
     // form control
@@ -111,15 +116,15 @@ const LoginModal = ()=>{
                 font-light
         "
       >
-        <p>Dont have an account?
+        <p>First time using Airbnb?
           <span 
-            onClick={registerModal.onClose} 
+            onClick={toogle} 
             className="
               text-neutral-800
               cursor-pointer 
               hover:underline
             "
-            > Sign In</span>
+            > Create an account</span>
         </p>
       </div>
         </div>
